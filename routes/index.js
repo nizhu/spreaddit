@@ -5,6 +5,7 @@
 //var data = require('../public/frontpage.json');
 
 var http = require('http');
+var url = require('url');
 
 var options = {
   host: 'api.reddit.com',
@@ -17,7 +18,6 @@ var options = {
 };
 
 exports.index = function(req, res){
-
   // var content = "";
   // var get = http.request(options, function(getRes) {
   //   getRes.setEncoding('utf8');
@@ -31,6 +31,12 @@ exports.index = function(req, res){
   //   console.log('ERROR: ' + e.message);
   // });
   // get.end();
-  res.render('index', { });
+  console.log(req);
+  var url_parts = url.parse(req.url, true);
+  var get_url = '/';
+  if (typeof url_parts.query.url != 'undefined'){
+    get_url = url_parts.query.url;
+  }
+  res.render('index', { purl: get_url });
 
 };
