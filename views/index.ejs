@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spreaddit</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+  </head>
+  <body>
+    <table id='content'>
+      <thead>
+        <tr>
+          <th>Subreddit</th>
+          <th>NSFW</th>
+          <th>Title</th>
+          <th>Comments</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <script>
+          $.getJSON("http://www.reddit.com/.json?limit=100&jsonp=?",
+          { format: "json" },
+          function(data) {
+            $.each(data.data.children, function(i,item){
+              $('#content').append('<tr><td>'+item.data.subreddit+'</td><td>'+item.data.over_18+'</td><td><a href="'+item.data.url+'">'+item.data.title+'</td><td><a href="http://reddit.com'+item.data.permalink+'">'+item.data.num_comments+'</td><td>'+item.data.score+'</td></tr>');
+            });
+          });
+        </script>
+      </tbody>
+    </table>
+  </body>
+</html>
