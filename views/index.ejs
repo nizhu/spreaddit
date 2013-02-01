@@ -6,27 +6,47 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
   </head>
   <body>
-    <table id='content'>
+    <h3 id='loadMessage'>Loading reddit.com<%= url.replace(/\/$/, "") %>...</h3>
+    <table id='content' style='display: none;'>
       <thead>
         <tr>
           <th>Subreddit</th>
-          <th>NSFW</th>
-          <th>Title</th>
-          <th>Comments</th>
           <th>Score</th>
+          <th>Cmnts</th>
+          <th>NSFW</th>
+          <th width='100%'>Title</th>
         </tr>
       </thead>
       <tbody>
         <script>
-          $.getJSON("http://reddit.com<%= purl %>.json?limit=100&jsonp=?",
-          { format: "json" },
-          function(data) {
-            $.each(data.data.children, function(i,item){
-              $('#content').append('<tr><td>'+item.data.subreddit+'</td><td>'+item.data.over_18+'</td><td><a href="'+item.data.url+'">'+item.data.title+'</td><td><a href="http://reddit.com'+item.data.permalink+'">'+item.data.num_comments+'</td><td>'+item.data.score+'</td></tr>');
+          var loadListing = function(path, params){
+            params = params || "";
+            console.log("http://api.reddit.com"+path+".json?limit=75"+params+"&jsonp=?");
+            $.getJSON("http://api.reddit.com"+path+".json?limit=75"+params+"&jsonp=?",
+            { format: "json" },
+            function(data) {
+              $.each(data.data.children, function(i,item){
+                $('#content').append('<tr><td>'+
+                  item.data.subreddit+'</td><td>'+
+                  item.data.score+'</td><td>'+
+                  '<a href="http://reddit.com'+item.data.permalink+'">'+item.data.num_comments+'</td><td>'+
+                  item.data.over_18+'</td><td>'+
+                  '<a href="'+item.data.url+'">'+item.data.title+'</td></tr>'
+                );
+              });
+              $('#content').css('display', 'block');
+              $('#loadMessage').css('display', 'none');
+              if ($('#loadNext').css('display') == 'none'){
+                $('#loadNext').css('display','block');
+              } 
+              $('#loadNext').attr('onClick', 'loadListing("'+path+'", "&after='+data.data.after+'")');
             });
-          });
+          }
+
+          loadListing('<%= url %>');
         </script>
       </tbody>
     </table>
+    <h3 id='loadNext' style='display:none'>More Data</h3>
   </body>
 </html>
