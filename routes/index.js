@@ -7,6 +7,10 @@
 var http = require('http');
 var url = require('url');
 
-exports.index = function(req, res){
-  res.render('index', { url: req.originalUrl });
+exports.listing = function(req, res){
+  res.render('listing', { url: req.originalUrl });
+};
+
+exports.comments = function(req, res){
+  res.render('comments', { url: req.originalUrl });
 };

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spreaddit</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+      var loadComments = function(path){
+        console.log("http://api.reddit.com"+path+".json?jsonp=?");
+        $.getJSON("http://api.reddit.com"+path+".json?jsonp=?",
+          { format: "json" },
+          function(data) {
+            if (data[0].data.children[0].data.is_self){
+              $('#post-title').append(data[0].data.children[0].data.title);
+            } else {
+              $('#post-title').append('<a href="'+data[0].data.children[0].data.url+'">'+data[0].data.children[0].data.title+'</a>');
+            }
+            $('#post-selftext').append(data[0].data.children[0].data.selftext);
+            if (data[1].data.children){
+              $.each(data[1].data.children, function(i,item){
+                loadChildren(item, 0);
+              });
+            }
+            $('#loadMessage').css('display', 'none');
+          }
+        );
+      };
+
+      var loadChildren = function(item, depth){
+        // $('#comments').append('<div style="margin-bottom:5px;margin-right:1cm;margin-left:'+depth+'cm;margin-bottom:2px">'+
+        //   item.data.author+' ('+
+        //   (item.data.ups-item.data.downs)+'): '+
+        //   item.data.body
+        // );
+        $('#comments').append('<tr><td>'+
+          item.data.author+'</td><td>'+
+          (item.data.ups-item.data.downs)+'</td><td style="padding-left:'+depth+'cm">'+
+          item.data.body+'</td></tr>'
+        );
+        if (item.data.replies.data && item.data.replies.data.children){
+          $.each(item.data.replies.data.children, function(i, child){
+            loadChildren(child, (depth+1));
+          });
+        }
+      };
+
+      loadComments('<%= url %>');
+    </script>
+  </head>
+  <body>
+    <h3 id='loadMessage'>Loading reddit.com<%= url.replace(/\/$/, "") %>...</h3>
+    <div style='width:50%; margin-left:auto; margin-right:auto'>
+        <h3 id='post-title'></h3>
+        <p id='post-selftext'></p>
+    </div>
+    <table id='comments'>
+
+    </table>
+  </body>
+</html>
