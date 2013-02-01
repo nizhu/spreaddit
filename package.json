@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "spreaddit",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,5 +9,9 @@
     "express": "3.1.0",
     "ejs": "0.8.x",
     "stylus": "0.32.0"
+  },
+  "engines": {
+    "node": "0.8.18",
+    "npm": "1.2.2"
   }
 }
