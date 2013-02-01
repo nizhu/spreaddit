@@ -27,7 +27,7 @@
             function(data) {
               $.each(data.data.children, function(i,item){
                 $('#content').append('<tr><td>'+
-                  item.data.subreddit+'</td><td>'+
+                  '<a href="http://'+window.location.host+'/r/'+item.data.subreddit+'">'+item.data.subreddit+'</a></td><td>'+
                   item.data.score+'</td><td>'+
                   '<a href="http://reddit.com'+item.data.permalink+'">'+item.data.num_comments+'</td><td>'+
                   item.data.over_18+'</td><td>'+
