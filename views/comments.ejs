@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Spreaddit</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="/javascripts/spreaddit.js"></script>
-    <script type="text/javascript">loadComments('<%= url %>');</script>
-  </head>
-  <body>
-    <h3 id='loadMessage'>Loading reddit.com<%= url.replace(/\/$/, "") %>...</h3>
-    <div style='width:50%; margin-left:auto; margin-right:auto'>
-        <h3 id='post-title'></h3>
-        <p id='post-selftext'></p>
-    </div>
-    <table id='comments'>
+<% include header.html %>
+      <script type="text/javascript">loadComments('<%= url %>');</script>
+      <div style='width:50%; margin-left:auto; margin-right:auto'>
+          <h3 id='post-title'></h3>
+          <p id='post-selftext'></p>
+      </div>
+      <table id='comments'>
 
-    </table>
-  </body>
-</html>
+      </table>
+<% include footer.html %>

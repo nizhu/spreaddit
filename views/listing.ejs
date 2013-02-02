@@ -1,28 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Spreaddit</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="/javascripts/spreaddit.js"></script>
-    <script>loadListing('<%= url %>');</script>
-  </head>
-  <body>
-    <h3 id='loadMessage'>Loading reddit.com<%= url.replace(/\/$/, "") %>...</h3>
-    <table id='content' style='display: none;'>
-      <thead>
-        <tr>
-          <th>Subreddit</th>
-          <th>Score</th>
-          <th>Cmnts</th>
-          <th>NSFW</th>
-          <th width='100%'>Title</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-      </tbody>
-    </table>
-    <h3 id='loadNext' style='display:none'>Next Page</h3>
-  </body>
-</html>
+<% include header.html %>
+      <script>loadListing('<%= url %>');</script>
+      <table>
+        <thead>
+          <tr>
+            <th>Subreddit</th>
+            <th>Score</th>
+            <th>Cmnts</th>
+            <th>NSFW</th>
+            <th width='100%'>Title</th>
+          </tr>
+        </thead>
+        <tbody id='listing-table'>
+          
+        </tbody>
+      </table>
+      <h3 id='loadNext' style='display:none'>Next Page</h3>
+<% include footer.html %>
