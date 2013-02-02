@@ -27,7 +27,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.listing);
+app.get('/(:type(new|controversial|top))?', routes.listing);
 app.get('/r/*/comments/*', routes.comments);
 app.get('/r/[^/]*/?', routes.listing);
 
